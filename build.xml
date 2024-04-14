@@ -1,0 +1,52 @@
+<!-- file: hello/build.xml -->
+
+<project name="Heap" default="runjar" basedir=".">
+  <property name="main.class" value="at.fhooe.swe4.Heap" />
+  <property name="program.jar" value="heap.jar" />
+  <property name="bin.dir" value="bin" />
+  <target name="create-bin" description="creates output directory">
+    <mkdir dir="${bin.dir}" />
+  </target>
+
+  <target name="compile"
+          depends="create-bin"
+          description="Compile Java sources">
+    <javac srcdir="src" destdir="${bin.dir}" includeantruntime="false">
+      <include name="**/*.java" />
+    </javac>
+    <javac srcdir="test" destdir="${bin.dir}" includeantruntime="false">
+      <include name="**/*.java" />
+    </javac>
+  </target>
+  <target name="run"
+          depends="compile"
+          description="Run Java Application">
+    <java classname="${main.class}" fork="true" classpath="${bin.dir}">
+      <assertions>  <enable />  </assertions>
+    </java>
+  </target>
+  <target name="jar"
+          depends="compile"
+          description="Create Java archive">
+    <jar destfile="${program.jar}">
+      <fileset dir="${bin.dir}" includes="**/*.class" />
+      <manifest>
+        <attribute name="main-class" value="${main.class}" />
+      </manifest>
+    </jar>
+  </target>
+  <target name="runjar"
+          depends="jar"
+          description="Run the JAR">
+    <java jar="${program.jar}" fork="true" classpath=".">
+      <assertions>  <enable />  </assertions>
+    </java>
+  </target>
+  <target name="clean"
+          description="Delete all build artifacts">
+    <delete file="${program.jar}">
+      <fileset dir="." includes="**/*.class" />
+    </delete>
+  </target>
+
+</project>
