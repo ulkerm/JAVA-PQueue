@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 public class PQueueHeap<T extends Comparable<T>> implements PQueue<T> {
-    private List<T> values; // NOTE: import java.util with Alt+Enter
+    private List<T> values;
 
     public PQueueHeap() {
-        values = new ArrayList<>(); // NOTE: <>-operator infers type
+        values = new ArrayList<>();
     }
     private boolean less(T a, T b) {
         return a.compareTo(b) < 0;
@@ -18,59 +18,47 @@ public class PQueueHeap<T extends Comparable<T>> implements PQueue<T> {
         return values.isEmpty();
     }
 
-    /**
-     * Returns the top element without removing it.
-     */
+
     public T peek() {
         return values.isEmpty() ? null : values.get(0);
     }
 
-    /**
-     * Adds a new element in correct order
-     */
-
     public void enqueue(T value) {
-        assert isHeap(); // create method with Alt+Eneter
-        values.add(value); // NOTE: not insert()
-        upHeap(); // create method with Alt+Enter
+        assert isHeap();
+        values.add(value);
+        upHeap();
         assert isHeap();
     }
 
-    /**
-     * @return the topmost element.
-     */
     public T dequeue() {
         assert isHeap();
         if (values.isEmpty())
             throw new NoSuchElementException("cannot dequeue from empty queue");
         T top = values.get(0);
         int last = values.size() - 1;
-        values.set(0, values.get(last)); // values[0] = values[size-1];
+        values.set(0, values.get(last));
         values.remove(last);
         if (!values.isEmpty())
-            downHeap(); // create method with Alt+Enter
+            downHeap();
         assert isHeap();
         return top;
     }
 
-    // shift index (no wasted space)
+
     private static int parent(int i) {
         return (i - 1) / 2;
-    } // (i+1)/2-1 -> i/2+1/2-1 -> i/2-1/2 -> (i-1)/2
+    }
 
     private static int left(int i) {
         return i * 2 + 1;
-    } // (i+1)*2-1 -> i*2+1*2-1 -> i*2+2-1 -> i*2+1
+    }
 
     private static int right(int i) {
         return i * 2 + 2;
-    } // (i+1)*2+1-1 -> i*2+2*2+1-1 -> i*2+2
+    }
 
-    /**
-     * Moves the bottommost/last element to its correct posistion
-     * by repeatedly swapping it with its parent as necessary.
-     */
-    private void upHeap() { // move statement up (Ctrl+Shift+Up)
+
+    private void upHeap() {
         int i = values.size() - 1;
         T x = values.get(i);
         while (i != 0 && less(values.get(parent(i)), x)) {
@@ -113,7 +101,7 @@ public class PQueueHeap<T extends Comparable<T>> implements PQueue<T> {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder(); // like stringstream
+        StringBuilder sb = new StringBuilder();
         sb.append("heap = [");
         for (int i = 0; i < values.size(); i++) {
             if (i > 0) sb.append(" ");

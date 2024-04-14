@@ -17,7 +17,15 @@ class DHeapQueueTest {
     @Test
     void peek() {
         h.enqueue(2);
-        assertEquals(5, h.peek());   // Test fails, cause peek()=2
+        h.enqueue(33);
+        h.enqueue(12);
+        h.enqueue(23);
+        h.enqueue(5);
+        h.enqueue(53);
+        h.enqueue(5);
+        h.enqueue(63);
+        h.enqueue(5);
+        assertEquals(63, h.peek());
     }
 
     @Test
@@ -31,17 +39,19 @@ class DHeapQueueTest {
 
     @Test
     void dequeue() {
+        Random r = new Random();
+        for (int i = 0; i < 22; i++) {
+            h.enqueue(r.nextInt(100));
+        }
         while (!h.isEmpty()) {
             h.dequeue();
-            // System.out.println(h);
         }
         assertTrue(h.isEmpty());
     }
 
     @Test
-    void test_runtime()  {
+    void test_runtime_enqueue()  {
         long start = System.nanoTime();
-        // do some computations here
         Random r = new Random();
         for (int i = 0; i < 100000; i++) {
             h.enqueue(r.nextInt(1000));
@@ -50,4 +60,17 @@ class DHeapQueueTest {
         System.out.printf("time = %f sec%n", time/1000000000.0);
     }
 
+    @Test
+    void test_runtime_dequeue()  {
+        Random r = new Random();
+        for (int i = 0; i < 100000; i++) {
+            h.enqueue(r.nextInt(1000));
+        }
+        long start = System.nanoTime();
+        while (!h.isEmpty()) {
+            h.dequeue();
+        }
+        long time = System.nanoTime() - start;
+        System.out.printf("time = %f sec%n", time/1000000000.0);
+    }
 }
