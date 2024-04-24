@@ -7,19 +7,7 @@ public class Heap {
     public static void main(String[] args) {
         //DHeapQueue<Integer> h = new DHeapQueue<>();
         PQueueHeap<Integer> h = new PQueueHeap<>();
-        //System.out.println(h);
-        // System.out.println(h.dequeue());
-        //h.enqueue(2);
-        //System.out.println(h);
 
-/*
-        while (!h.isEmpty()) {
-            System.out.println(h.dequeue());
-            // System.out.println(h);
-        }
-        System.out.println(h);
-
-*/
         ArrayList<Long> times = new ArrayList<>();
         Random r = new Random();
         for (int i = 0; i < 100000; i++) {
